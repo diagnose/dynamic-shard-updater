@@ -15,7 +15,7 @@ class ShardUpdater:
 
         self.CheckSettings()
 
-    def CheckSettings(self):
+    def checkSettings(self):
         if os.path.isfile(constants.SETTINGS_FILE):
             # This user already has a settings file. We don't need to bug them.
             # TODO: Verify everything we need is actually in the settings file!
@@ -23,16 +23,16 @@ class ShardUpdater:
         else:
             print(constants.NO_SETTINGS)
 
-    def Invoker(self):
+    def invoker(self):
         pass
 
-    def InvokerParser(self, command):
+    def invokerParser(self, command):
         command = command.split(constants.COMMAND_SPACE)
         if command[0] == constants.COMMAND_HELP:
             print(constants.GENERAL_HELP)
             print(constants.COMMANDS)
 
-    def RunScanner(self):
+    def runScanner(self):
         pass
 
 ShardUpdater = ShardUpdater()
