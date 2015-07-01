@@ -13,7 +13,7 @@ class ShardUpdater:
         if platform.system() == constants.PLATFORM_WINDOWS:
             ctypes.windll.kernel32.SetConsoleTitleA(constants.TITLE)
 
-        self.CheckSettings()
+        self.checkSettings()
 
     def checkSettings(self):
         if os.path.isfile(constants.SETTINGS_FILE):
@@ -24,7 +24,8 @@ class ShardUpdater:
             print(constants.NO_SETTINGS)
 
     def invoker(self):
-        pass
+        command = input('> ')
+        self.invokerParser(command)
 
     def invokerParser(self, command):
         command = command.split(constants.COMMAND_SPACE)
