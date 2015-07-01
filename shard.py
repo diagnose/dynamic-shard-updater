@@ -19,7 +19,7 @@ class ShardUpdater:
         if os.path.isfile(constants.SETTINGS_FILE):
             # This user already has a settings file. We don't need to bug them.
             # TODO: Verify everything we need is actually in the settings file!
-            self.RunScanner()
+            self.runScanner()
         else:
             print(constants.NO_SETTINGS)
 
