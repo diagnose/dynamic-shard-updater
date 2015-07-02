@@ -3,10 +3,11 @@ import ctypes
 import json
 import os
 import platform
+import requests
 import sys
-import textwrap
 import threading
 import time
+import webbrowser
 
 from shard import constants
 from shard import follow
@@ -16,25 +17,24 @@ class ShardUpdater(cmd.Cmd):
         if platform.system() == constants.PLATFORM_WINDOWS:
             ctypes.windll.kernel32.SetConsoleTitleA(constants.TITLE)
 
-        super(ShardUpdater, self).__init__()
+        cmd.Cmd.__init__(self)
         self._checkSettings()
 
     def _start(self):
         if threading.activeCount() is 2:
             print(constants.THREAD_RUNNING)
         else:
-            print(constants.STARTING)
             self.thread = threading.Thread(target=follow.Follow,
-                                           args=(self.directory,
-                                           self.interval), daemon=True)
+                                           args=(self.directory, self.interval))
+            self.thread.daemon = True
             self.thread.start()
             print(constants.THREAD_STARTED)
 
     def _checkSettings(self):
         def requestVariables():
             # Asks for variables to set in the settings.json file.
-            directory = input('Toontown Directory: ')
-            update = input('Update Interval (in seconds): ')
+            directory = raw_input('Toontown Directory: ')
+            update = raw_input('Update Interval (in seconds): ')
             writeVariables(directory, update)
             verifyIntegrity()
 
@@ -68,9 +68,18 @@ class ShardUpdater(cmd.Cmd):
                 self.directory = settings['directory']
                 self.interval = settings['interval']
 
-                self.do_start(args='')
+                self._checkUpdates()
+                self._start()
 
         verifyExistance()
+
+    def _checkUpdates(self):
+        latest = requests.get(constants.VERSION_URL, verify=False).text
+        if latest == constants.VERSION:
+            # We have the latest version. Nothing to do here.
+            pass
+        else:
+            print(constants.OUTDATED_VERSION % (constants.VERSION, latest))
 
     def do_clear(self, args):
         if platform.system() == constants.PLATFORM_WINDOWS:
@@ -102,6 +111,14 @@ class ShardUpdater(cmd.Cmd):
         else:
             print(constants.THREAD_OFFLINE)
 
+    def do_update(self, args):
+        if args == 'check':
+            self._checkUpdates()
+        elif args == 'download':
+            webbrowser.open(constants.GITHUB_URL)
+        else:
+            print(constants.INVALID_ARGUMENT)
+
     def help_clear(self):
         print('Clears the command line of any text.')
 
@@ -110,6 +127,9 @@ class ShardUpdater(cmd.Cmd):
 
     def help_status(self):
         print('Returns the status of the shard updater thread.')
+
+    def help_update(self):
+        print('Allows the user to check for the latest version available.')
 
 if __name__ == '__main__':
     console = ShardUpdater()
