@@ -7,6 +7,9 @@ SHARDS_FILE = 'shards.json'
 COMMAND_CLEAR = 'clear'
 COMMAND_EXIT = 'exit'
 COMMAND_HELP = 'help'
+COMMAND_START = 'start'
+COMMAND_STATUS = 'status'
+COMMAND_STOP = 'stop'
 COMMAND_SPACE = ' '
 
 # Platforms
@@ -33,3 +36,8 @@ GENERAL_HELP = 'The Toontown Stream Shard Updater makes it easy to switch ' \
                'districts while livestreaming, as your district name is ' \
                'automatically updated!'
 STARTING = 'Starting...'
+THREAD_ONLINE = 'District Updater: UP'
+THREAD_OFFLINE = 'District Updater: DOWN'
+THREAD_RUNNING = 'The district updater is already running in the background.'
+THREAD_STARTED = 'The district updater has started.'
+THREAD_TERMINATED = 'The district updater has been terminated.'
