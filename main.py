@@ -1,3 +1,4 @@
+import cmd
 import ctypes
 import json
 import os
@@ -10,11 +11,12 @@ import time
 from shard import constants
 from shard import follow
 
-class ShardUpdater:
+class ShardUpdater(cmd.Cmd):
     def __init__(self):
         if platform.system() == constants.PLATFORM_WINDOWS:
             ctypes.windll.kernel32.SetConsoleTitleA(constants.TITLE)
 
+        super(ShardUpdater, self).__init__()
         self.checkSettings()
 
     def checkSettings(self):
@@ -33,7 +35,6 @@ class ShardUpdater:
         def _verifyExistance():
             if os.path.isfile(constants.SETTINGS_FILE):
                 # This user already has a settings file. We don't need to bug them.
-                # TODO: Verify everything we need is actually in the settings file!
                 _verifyIntegrity()
             else:
                 print(constants.NO_SETTINGS)
@@ -61,50 +62,35 @@ class ShardUpdater:
                                                self.interval), daemon=True)
                 self.thread.start()
 
-                self.invoker()
-
         _verifyExistance()
 
-    def invoker(self):
-        command = input('$ ')
-        self.invokerParser(command)
-
-    def invokerParser(self, command):
-        command = command.split(constants.COMMAND_SPACE)
-        if command[0] == constants.COMMAND_CLEAR:
-            if platform.system() == constants.PLATFORM_WINDOWS:
-                # Windows just had to use cls instead of clear.
-                os.system('cls')
-            else:
-                os.system('clear')
-
-        elif command[0] == constants.COMMAND_HELP:
-            print(constants.GENERAL_HELP)
-            print(constants.COMMANDS)
-
-        elif command[0] == constants.COMMAND_EXIT:
-            sys.exit(0)
-
-        elif command[0] == constants.COMMAND_START:
-            if threading.activeCount() is not 1:
-                print(constants.THREAD_RUNNING)
-            else:
-                self.thread.start()
-
-        elif command[0] == constants.COMMAND_STATUS:
-            if threading.activeCount() is not 1:
-                print(constants.THREAD_ONLINE)
-            else:
-                print(constants.THREAD_OFFLINE)
-
-        elif command[0] == constants.COMMAND_STOP:
-            follow.Follow.terminate()
-            print(constants.THREAD_TERMINATED)
-
+    def do_clear(self, args):
+        if platform.system() == constants.PLATFORM_WINDOWS:
+            # Windows just had to use cls instead of clear.
+            os.system('cls')
         else:
-            print(constants.INVALID_COMMAND % command[0])
+            os.system('clear')
 
-        self.invoker()
+    def do_exit(self, args):
+        sys.exit(0)
 
+    def do_status(self, args):
+        if threading.activeCount() is not 1:
+            print(constants.THREAD_ONLINE)
+        else:
+            print(constants.THREAD_OFFLINE)
 
-ShardUpdater = ShardUpdater()
+    def help_clear(self):
+        print('Clears the command line of any text.')
+
+    def help_exit(self):
+        print('Exits the program.')
+
+    def help_status(self):
+        print('Returns the status of the shard updater thread.')
+
+if __name__ == '__main__':
+    console = ShardUpdater()
+    console.prompt = '[console ~]# '
+    console.cmdloop('Toontown Stream Shard Updater (%s)\n'
+                    'Type "help" for more information.\n' % constants.VERSION)
