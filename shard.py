@@ -2,6 +2,7 @@ import ctypes
 import json
 import os
 import platform
+import sys
 import textwrap
 import threading
 import time
@@ -20,12 +21,11 @@ class ShardUpdater:
         def _requestVariables():
             # Asks for variables to set in the settings.json file.
             directory = input('Toontown Directory: ')
-            if os.path.isdir(directory):
-                # This is an actual directory. We're going to trust the user!
-                pass
-            else:
+            if not os.path.isdir(directory):
+                # This isn't a directory. Alert the user.
                 print(constants.INVALID_DIRECTORY)
                 _requestVariables()
+
             update = input('Update Interval (in seconds): ')
             if update.isdigit():
                 # The user has entered a positive integer. Thank you!
@@ -50,19 +50,44 @@ class ShardUpdater:
 
         def _verifyIntegrity():
             # Verifies the variables set actually make sense.
-            pass
+            with open(constants.SETTINGS_FILE) as setting:
+                settings = json.load(setting)
+                if not os.path.isdir(settings['directory']):
+                    # The directory specified in the settings file doesn't
+                    # exist. Perhaps they've moved folders?
+                    print(constants.INVALID_DIRECTORY)
+                    _requestVariables()
+
+                if not settings['interval'].isdigit():
+                    print(constants.INVALID_INTERVAL)
+                    _requestVariables()
+
+                # They've passed integrity checks. Bring them to the console!
+                self.invoker()
 
         _verifyExistance()
 
     def invoker(self):
         command = input('> ')
-        self.invokerParser(command)
+        self.invokerParser(command.lower())
 
     def invokerParser(self, command):
         command = command.split(constants.COMMAND_SPACE)
+        if command[0] == constants.COMMAND_CLEAR:
+            if platform.system() == constants.PLATFORM_WINDOWS:
+                # Windows just had to use cls instead of clear.
+                os.system('cls')
+            else:
+                os.system('clear')
+
         if command[0] == constants.COMMAND_HELP:
             print(constants.GENERAL_HELP)
             print(constants.COMMANDS)
+
+        if command[0] == constants.COMMAND_EXIT:
+            sys.exit(0)
+
+        self.invoker()
 
     def runScanner(self):
         pass
