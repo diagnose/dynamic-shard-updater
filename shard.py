@@ -68,8 +68,8 @@ class ShardUpdater:
         _verifyExistance()
 
     def invoker(self):
-        command = input('> ')
-        self.invokerParser(command.lower())
+        command = input('$ ')
+        self.invokerParser(command)
 
     def invokerParser(self, command):
         command = command.split(constants.COMMAND_SPACE)
@@ -80,12 +80,15 @@ class ShardUpdater:
             else:
                 os.system('clear')
 
-        if command[0] == constants.COMMAND_HELP:
+        elif command[0] == constants.COMMAND_HELP:
             print(constants.GENERAL_HELP)
             print(constants.COMMANDS)
 
-        if command[0] == constants.COMMAND_EXIT:
+        elif command[0] == constants.COMMAND_EXIT:
             sys.exit(0)
+
+        else:
+            print(constants.INVALID_COMMAND % command[0])
 
         self.invoker()
 
