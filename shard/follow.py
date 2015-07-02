@@ -21,15 +21,13 @@ class Follow(Thread):
         for line in loglines:
             if constants.OTP_ENTERING_SHARD in line:
                 shard_line = line.split(constants.COMMAND_SPACE)
-                shard_list = json.loads(constants.SHARDS_FILE)
-                shard_id = int(shard_line[-1].rstrip())
-                print(shard_list)
-                print(shard_id)
-                print(shard_line)
-                shard_name = shard_list[shard_id][constants.SHARD_NAME]
+                with open(constants.SHARDS_FILE, encoding='utf-8') as shard_file:
+                    shard_list = json.loads(shard_file.read())
+                    shard_id = shard_line[-1].rstrip()
+                    shard_name = shard_list[shard_id]
 
-                print(constants.NEW_SHARD % (shard_id, shard_name))
-                self.write(shard_id, shard_name)
+                print(constants.NEW_SHARD % (int(shard_id), shard_name))
+                self.write(int(shard_id), shard_name)
 
     def follow(self):
         self.logfile.seek(0, 2)
