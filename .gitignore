@@ -56,5 +56,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# User Settings
+# User generated files
 settings.json
+district.txt
