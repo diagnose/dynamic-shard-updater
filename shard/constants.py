@@ -1,7 +1,6 @@
 # Filenames
 DISTRICT_FILE = 'district.txt'
 SETTINGS_FILE = 'settings.json'
-SHARDS_FILE = 'shards.json'
 
 # Platforms
 PLATFORM_WINDOWS = 'Windows'
@@ -36,3 +35,23 @@ THREAD_RUNNING = 'The district updater is already running in the background.'
 THREAD_STARTED = 'The district updater has started.'
 THREAD_NOT_RUNNING = 'The district updater isn\'t running.'
 THREAD_TERMINATED = 'The district updater has been terminated.'
+
+# Shards
+SHARDS = {
+  "500000001":"Colorful Canvas",
+  "501000001":"Paintbrush Field",
+  "502000001":"Vibrant Valley",
+  "503000001":"Renaissance River",
+  "504000001":"Bliss Bayou",
+  "505000001":"Graphite Gulch",
+  "506000001":"Pastel Plains",
+  "507000001":"Acrylic Acres",
+  "508000001":"Watercolor Woods",
+  "509000001":"Pigment Point",
+  "510000001":"Eraser Oasis",
+  "511000001":"Stencil Steppe",
+  "512000001":"Brush Bay",
+  "513000001":"Easel Acres",
+  "514000001":"Pianissimo Plains",
+  "515000001":"Baroque Bluffs"
+}

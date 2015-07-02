@@ -22,7 +22,7 @@ class Follow(threading.Thread):
         for line in loglines:
             if constants.OTP_ENTERING_SHARD in line:
                 shard_line = line.split(constants.COMMAND_SPACE)
-                with open(constants.SHARDS_FILE) as shard_file:
+                with open(constants.SHARDS) as shard_file:
                     shard_list = json.loads(shard_file.read())
                     shard_id = shard_line[-1].rstrip()
                     shard_name = shard_list[shard_id]
