@@ -17,52 +17,60 @@ class ShardUpdater(cmd.Cmd):
             ctypes.windll.kernel32.SetConsoleTitleA(constants.TITLE)
 
         super(ShardUpdater, self).__init__()
-        self.checkSettings()
+        self._checkSettings()
 
-    def checkSettings(self):
-        def _requestVariables():
+    def _start(self):
+        if threading.activeCount() is 2:
+            print(constants.THREAD_RUNNING)
+        else:
+            print(constants.STARTING)
+            self.thread = threading.Thread(target=follow.Follow,
+                                           args=(self.directory,
+                                           self.interval), daemon=True)
+            self.thread.start()
+            print(constants.THREAD_STARTED)
+
+    def _checkSettings(self):
+        def requestVariables():
             # Asks for variables to set in the settings.json file.
             directory = input('Toontown Directory: ')
             update = input('Update Interval (in seconds): ')
-            _writeVariables(directory, update)
-            _verifyIntegrity()
+            writeVariables(directory, update)
+            verifyIntegrity()
 
-        def _writeVariables(dir, interval):
+        def writeVariables(dir, interval):
             with open(constants.SETTINGS_FILE, 'w') as settings:
                 config = {'directory': dir, 'interval': interval}
                 json.dump(config, settings)
 
-        def _verifyExistance():
+        def verifyExistance():
             if os.path.isfile(constants.SETTINGS_FILE):
                 # This user already has a settings file. We don't need to bug them.
-                _verifyIntegrity()
+                verifyIntegrity()
             else:
                 print(constants.NO_SETTINGS)
-                _requestVariables()
+                requestVariables()
 
-        def _verifyIntegrity():
+        def verifyIntegrity():
             # Verifies the variables set actually make sense.
             with open(constants.SETTINGS_FILE) as setting:
                 settings = json.load(setting)
                 if not os.path.isdir(settings['directory']):
                     # This isn't a directory. Notify the user.
                     print(constants.INVALID_DIRECTORY)
-                    _requestVariables()
+                    requestVariables()
 
                 if not settings['interval'].isdigit():
                     print(constants.INVALID_INTERVAL)
-                    _requestVariables()
+                    requestVariables()
 
                 # They've passed integrity checks. Bring them to the console!
                 self.directory = settings['directory']
                 self.interval = settings['interval']
 
-                self.thread = threading.Thread(target=follow.Follow,
-                                               args=(self.directory,
-                                               self.interval), daemon=True)
-                self.thread.start()
+                self.do_start(args='')
 
-        _verifyExistance()
+        verifyExistance()
 
     def do_clear(self, args):
         if platform.system() == constants.PLATFORM_WINDOWS:
@@ -74,8 +82,22 @@ class ShardUpdater(cmd.Cmd):
     def do_exit(self, args):
         sys.exit(0)
 
+    def do_start(self, args):
+        self._start()
+
+    """
+    # TODO: Let's find a way to actually stop a thread!
+    def do_stop(self, args):
+        if threading.activeCount() is 2:
+            self.thread.stop()
+            self.thread.join()
+            print(constants.THREAD_TERMINATED)
+        else:
+            print(constants.THREAD_NOT_RUNNING)
+    """
+
     def do_status(self, args):
-        if threading.activeCount() is not 1:
+        if threading.activeCount() is 2:
             print(constants.THREAD_ONLINE)
         else:
             print(constants.THREAD_OFFLINE)
