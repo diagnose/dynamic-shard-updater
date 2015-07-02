@@ -2,12 +2,12 @@ import glob
 import json
 import os
 import sys
+import threading
 import time
 
 from shard import constants
-from threading import Thread
 
-class Follow(Thread):
+class Follow(threading.Thread):
     def __init__(self, directory, interval):
         super(Follow, self).__init__()
 
@@ -15,6 +15,7 @@ class Follow(Thread):
         self.interval = int(interval)
 
         newest = max(glob.iglob(self.directory + '*.log'), key=os.path.getctime)
+        print(constants.READING_LOG % newest)
         self.logfile = open(newest)
         loglines = self.follow()
 
@@ -45,6 +46,3 @@ class Follow(Thread):
                                constants.DISTRICT_UNKNOWN)
             else:
                 district.write(constants.CURRENT_DISTRICT % shard_name)
-
-    def terminate(self):
-        sys.exit(0)
