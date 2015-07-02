@@ -1,2 +1,2 @@
-cx_Freeze==4.3.4
-requests==2.7.0
+pyinstaller
+requests

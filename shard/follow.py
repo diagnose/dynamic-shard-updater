@@ -9,7 +9,7 @@ from shard import constants
 
 class Follow(threading.Thread):
     def __init__(self, directory, interval):
-        super(Follow, self).__init__()
+        threading.Thread.__init__(self)
 
         self.directory = directory
         self.interval = int(interval)
