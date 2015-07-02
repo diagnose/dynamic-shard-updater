@@ -9,6 +9,8 @@ from threading import Thread
 
 class Follow(Thread):
     def __init__(self, directory, interval):
+        super(Follow, self).__init__()
+
         self.directory = directory
         self.interval = int(interval)
 
