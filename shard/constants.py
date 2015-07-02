@@ -17,7 +17,7 @@ COMMAND_SPACE = ' '
 TITLE = b'Toontown Shard Updater'
 GITHUB_URL = 'https://github.com/misread/stream-shard-updater/releases'
 VERSION = 'v0.6.0'
-VERSION_URL = 'https://gist.githubusercontent.com/misread/2610641f95c1cea6a3f4/raw'
+VERSION_URL = 'https://gist.githubusercontent.com/misread/2610641f95c1cea6a3f4/raw/shard-latest-version'
 
 # Prompts
 INVALID_ARGUMENT = 'The argument(s) provided are invalid.'
