@@ -37,9 +37,17 @@ class Follow(threading.Thread):
             yield line
 
     def write(self, shard, shard_name):
+        # First: Write a file with Current District: {{ name }}
         with open(constants.DISTRICT_FILE, 'w') as district:
             if shard_name is None:
                 district.write(constants.CURRENT_DISTRICT %
                                constants.DISTRICT_UNKNOWN)
             else:
                 district.write(constants.CURRENT_DISTRICT % shard_name)
+
+        # Second: Write a file with *only* the district name.
+        with open(constants.DISTRICT_NAME_FILE, 'w') as district:
+            if shard_name is None:
+                district.write(constants.DISTRICT_UNKNOWN)
+            else:
+                district.write(shard_name)

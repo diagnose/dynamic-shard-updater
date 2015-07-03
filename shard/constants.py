@@ -1,5 +1,6 @@
 # Filenames
 DISTRICT_FILE = 'district.txt'
+DISTRICT_NAME_FILE = 'district_name.txt'
 SETTINGS_FILE = 'settings.json'
 
 # Platforms
@@ -13,9 +14,9 @@ OTP_ENTERING_SHARD = ':OTPClientRepository: Entering shard'
 
 # Generic information
 COMMAND_SPACE = ' '
-TITLE = b'Toontown Shard Updater'
 GITHUB_URL = 'https://github.com/misread/stream-shard-updater/releases'
-VERSION = 'v0.6.0'
+TITLE = b'Toontown Shard Updater'
+VERSION = 'v0.6.3'
 VERSION_URL = 'https://gist.githubusercontent.com/misread/2610641f95c1cea6a3f4/raw/shard-latest-version'
 
 # Prompts
