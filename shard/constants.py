@@ -16,7 +16,7 @@ OTP_ENTERING_SHARD = ':OTPClientRepository: Entering shard'
 COMMAND_SPACE = ' '
 GITHUB_URL = 'https://github.com/misread/stream-shard-updater/releases'
 TITLE = b'Toontown Shard Updater'
-VERSION = 'v0.6.3'
+VERSION = 'v0.6.4'
 VERSION_URL = 'https://gist.githubusercontent.com/misread/2610641f95c1cea6a3f4/raw/shard-latest-version'
 
 # Prompts
