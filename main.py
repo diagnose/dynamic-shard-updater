@@ -89,6 +89,14 @@ class ShardUpdater(cmd.Cmd):
             os.system('clear')
 
     def do_exit(self, args):
+        try:
+            # We're going to try and remove the text files, since they're ugly.
+            os.remove(constants.DISTRICT_FILE)
+            os.remove(constants.DISTRICT_NAME_FILE)
+        except WindowsError:
+            # These files don't exist. Odd.
+            pass
+
         sys.exit(0)
 
     def do_start(self, args):
