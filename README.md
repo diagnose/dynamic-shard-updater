@@ -26,7 +26,7 @@ Some users feel uncertain downloading a pre-compiled program, and rightfully so.
 
 **Note:** Ensure you are running Python 2.7, any version of Python 3 will not work.
 
-1. Clone the repository by typing `git clone https://github.com/misread/stream-shard-updater/
+1. Clone the repository by typing `git clone https://github.com/misread/stream-shard-updater/`
 2. Install all necessary requirements by typing `pip install -r requirements.txt`
 3. Compile the application by typing `pyinstaller main.py --clean -n shards` This will generate `shards.exe` under the `dist` folder.
 
