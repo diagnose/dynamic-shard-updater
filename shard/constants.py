@@ -52,7 +52,7 @@ SHARDS = {
   "510000001":"Eraser Oasis",
   "511000001":"Stencil Steppe",
   "512000001":"Brush Bay",
-  "513000001":"Easel Acres",
-  "514000001":"Pianissimo Plains",
+  "513000001":"Avant Gardens",
+  "514000001":"Pianissimo Plateau",
   "515000001":"Baroque Bluffs"
 }
