@@ -7,7 +7,7 @@ After configuring the application, it will automatically scan the latest file av
 
 Currently, this application is very TTR-biased, however that will change as other servers emerge.
 
-## Usage:
+## Usage
 
 When opening the application for the first time, you will be asked to input the directory to your game and an update variable.
 Commonly, you'll want to use `C:\Program Files (x86)\Toontown Rewritten\logs\` for the directory, and you can set any cardinal number (meaning whole numbers 1 and above.)
