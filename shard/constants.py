@@ -28,7 +28,7 @@ NEW_SHARD = 'Shard %d entered. (%s according to the shard list.)'
 NO_SETTINGS = 'It appears this is your first time using this program. ' \
               'We need to ask you some information before you can use ' \
               'the district updater.'
-OUTDATED_VERSION = 'You are using an outdated version! (client %s, latest %s)'
+OUTDATED_VERSION = 'You are using an outdated version! (client %s, latest %s)\nType "update download" to get the latest version.'
 READING_LOG = 'Using log file: %s'
 THREAD_ONLINE = 'District Updater: UP'
 THREAD_OFFLINE = 'District Updater: DOWN'
