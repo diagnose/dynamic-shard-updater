@@ -14,10 +14,10 @@ OTP_ENTERING_SHARD = ':OTPClientRepository: Entering shard'
 
 # Generic information
 COMMAND_SPACE = ' '
-GITHUB_URL = 'https://github.com/misread/stream-shard-updater/releases'
+GITHUB_URL = 'https://github.com/receive/stream-shard-updater/releases'
 TITLE = b'Toontown Shard Updater'
-VERSION = 'v0.6.6'
-VERSION_URL = 'https://gist.githubusercontent.com/misread/2610641f95c1cea6a3f4/raw/shard-latest-version'
+VERSION = 'v0.6.8'
+VERSION_URL = 'https://gist.githubusercontent.com/receive/2610641f95c1cea6a3f4/raw/shard-latest-version'
 
 # Prompts
 INVALID_ARGUMENT = 'The argument(s) provided are invalid.'
@@ -54,5 +54,9 @@ SHARDS = {
   "512000001":"Brush Bay",
   "513000001":"Avant Gardens",
   "514000001":"Pianissimo Plateau",
-  "515000001":"Baroque Bluffs"
+  "515000001":"Baroque Bluffs",
+  "516000001":"Calligraphy Cliff",
+  "517000001":"Fortissimo Forest",
+  "518000001":"Crayon Canyon",
+  "519000001":"Mosaic Marsh",
 }
